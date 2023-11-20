@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function startMp3WithBandRejectFilter(frequency) {
     // Aqui você irá implementar a lógica para tocar o MP3 e aplicar o filtro
     // Por exemplo, você pode criar um elemento de áudio e aplicar o filtro ao seu source
-    const mp3Audio = new Audio('https://github.com/nerybauer/tinnitune-V0.2/raw/main/NatureMP3.mp3'); // Substitua pelo caminho correto do seu arquivo
+    const mp3Audio = new Audio('NatureMP3.mp3'); // Substitua pelo caminho correto do seu arquivo
     mp3Source = audioContext.createMediaElementSource(mp3Audio);
     
     bandRejectFilter = audioContext.createBiquadFilter();
