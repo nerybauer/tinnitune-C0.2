@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const playingFrequencyElement = document.getElementById('playingFrequency');
     
     if (storedFrequency) {
-        playingFrequencyElement.textContent = `Tocando na frequência de ${storedFrequency} Hz`;
+        playingFrequencyElement.textContent = `Tocando com corte na frequência de ${storedFrequency} Hz`;
         startMp3WithBandRejectFilter(storedFrequency);
     }
 
@@ -23,21 +23,40 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function startMp3WithBandRejectFilter(frequency) {
+//function startMp3WithBandRejectFilter(frequency) {
     // Aqui você irá implementar a lógica para tocar o MP3 e aplicar o filtro
     // Por exemplo, você pode criar um elemento de áudio e aplicar o filtro ao seu source
+    //const mp3Audio = new Audio('NatureMP3.mp3'); // Substitua pelo caminho correto do seu arquivo
+    //mp3Source = audioContext.createMediaElementSource(mp3Audio);
+    
+   // bandRejectFilter = audioContext.createBiquadFilter();
+   // bandRejectFilter.type = 'notch'; // Tipo 'notch' é um rejeita-faixa
+    //bandRejectFilter.frequency.setValueAtTime(frequency, audioContext.currentTime);
+   // bandRejectFilter.Q.value = 10; // Um valor Q alto significa uma rejeição mais estreita
+    
+    //mp3Source.connect(bandRejectFilter);
+    //bandRejectFilter.connect(audioContext.destination);
+    
+    //mp3Audio.play();
+
+function startMp3WithPeakingFilter(frequency) {
+    // Cria um elemento de áudio e aplica o filtro ao seu source
     const mp3Audio = new Audio('NatureMP3.mp3'); // Substitua pelo caminho correto do seu arquivo
     mp3Source = audioContext.createMediaElementSource(mp3Audio);
-    
-    bandRejectFilter = audioContext.createBiquadFilter();
-    bandRejectFilter.type = 'notch'; // Tipo 'notch' é um rejeita-faixa
-    bandRejectFilter.frequency.setValueAtTime(frequency, audioContext.currentTime);
-    bandRejectFilter.Q.value = 10; // Um valor Q alto significa uma rejeição mais estreita
-    
-    mp3Source.connect(bandRejectFilter);
-    bandRejectFilter.connect(audioContext.destination);
-    
+
+    let peakingFilter = audioContext.createBiquadFilter();
+    peakingFilter.type = 'peaking'; // Tipo 'peaking' para o filtro
+    peakingFilter.frequency.setValueAtTime(frequency, audioContext.currentTime);
+    peakingFilter.Q.value = 10; // Um valor Q alto para uma banda mais estreita
+    peakingFilter.gain.value = -10; // Define o ganho fixo para atenuar a frequência central
+
+    mp3Source.connect(peakingFilter);
+    peakingFilter.connect(audioContext.destination);
+
     mp3Audio.play();
+}
+
+
     animateSoundWaves(); // Função hipotética para iniciar a animação das ondas
 }
 
