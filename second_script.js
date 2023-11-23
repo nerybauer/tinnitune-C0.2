@@ -32,7 +32,7 @@ function startMp3WithBandRejectFilter(frequency) {
     bandRejectFilter = audioContext.createBiquadFilter();
     bandRejectFilter.type = 'notch'; // Tipo 'notch' é um rejeita-faixa
     bandRejectFilter.frequency.setValueAtTime(frequency, audioContext.currentTime);
-    bandRejectFilter.Q.value = 10; // Um valor Q alto significa uma rejeição mais estreita
+    bandRejectFilter.Q.value = 100; // Um valor Q alto significa uma rejeição mais estreita
     
     mp3Source.connect(bandRejectFilter);
     bandRejectFilter.connect(audioContext.destination);
