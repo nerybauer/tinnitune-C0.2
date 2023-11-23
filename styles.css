@@ -3,6 +3,14 @@
     margin: 0 auto;
 }
 
+#wave-container {
+    width: 800px;
+    height: 300px;
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+}
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
